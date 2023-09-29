@@ -1,8 +1,8 @@
 COURSE = cs310
 SEMESTER = fall2023
 CP_NUMBER = 1
-LASTNAME = Lewis
-GITUSERID = mlewis608
+LASTNAME = Zheng
+GITUSERID = ChinnyChilla
 EXE = movie_db
 MENU_EXE = menu_sample
 
@@ -16,14 +16,22 @@ CC = g++
 BIN = bin
 OBJ = obj
 
-all: $(BIN)/$(MENU_EXE)
+all: $(BIN)/$(EXE)
 
-$(BIN)/$(MENU_EXE): $(OBJ)/sample_menu.o
-	$(CC) $(FLAGS) $(OBJ)/sample_menu.o -o $@
+$(BIN)/$(EXE): $(OBJ)/sample_menu.o $(OBJ)/MovieDatabase.o $(OBJ)/Movie.o $(OBJ)/Actor.o 
+	$(CC) $(FLAGS) $(OBJ)/sample_menu.o $(OBJ)/MovieDatabase.o $(OBJ)/Movie.o $(OBJ)/Actor.o -o $@
 
 $(OBJ)/sample_menu.o: sample_menu.cpp Parser.h
 	$(CC) $(FLAGS) -c sample_menu.cpp -o $@
 
+$(OBJ)/MovieDatabase.o: MovieDatabase.cpp MovieDatabase.h Movie.h Actor.h
+	$(CC) $(FLAGS) -c MovieDatabase.cpp -o $@
+
+$(OBJ)/Movie.o: Movie.cpp Movie.h Actor.h
+	$(CC) $(FLAGS) -c Movie.cpp -o $@
+
+$(OBJ)/Actor.o: Actor.cpp Actor.h
+	$(CC) $(FLAGS) -c Actor.cpp -o $@
 tar:	clean
 	tar cvvf $(TARFILE) $(REPODIR)
 	gzip $(TARFILE)
@@ -31,4 +39,4 @@ tar:	clean
 	@echo $(ZIPFILE)
 
 clean:
-	rm -f $(OBJ)/*.o $(BIN)/$(MENU_EXE) $(ZIPFILE)
+	rm -f $(OBJ)/*.o $(BIN)/$(EXE) $(ZIPFILE)
