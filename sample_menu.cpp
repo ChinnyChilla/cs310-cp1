@@ -25,7 +25,13 @@ void join_cast(unsigned int actorid, unsigned int movieid, MovieDatabase &movied
 void cast(unsigned int movieid, MovieDatabase &mdb) {
 	mdb.printCastOfMovie(movieid);
 }
-
+void career(unsigned int actorid, MovieDatabase &mdb) {
+	mdb.printCareer(actorid);
+}
+void remove_actor(unsigned int actorid, MovieDatabase &mdb)
+{
+	mdb.removeActor(actorid);
+}
 
 bool accept_commands(istream &is, bool silent=false, bool echo=false) {
    string command;  
@@ -41,6 +47,8 @@ bool accept_commands(istream &is, bool silent=false, bool echo=false) {
 			  << "   register_actor <actorid> <last> <first>" << endl
 			  << "   join_cast <actorid> <movieid>" << endl
 			  << "   cast <movieid>" << endl
+			  << "   career <actorid>" << endl
+			  << "   remove_actor <actorid>" << endl
 			  << "   quit";
 		 cout << endl << ": ";
       }
@@ -157,6 +165,46 @@ bool accept_commands(istream &is, bool silent=false, bool echo=false) {
 			  else
 			  {
 				  cast(stoi(p.getArg(1)), *moviedb);
+			  }
+		  }
+	  }
+	  else if (p.getOperation() == "career")
+	  {
+		  if (p.numArgs() < 1)
+			  cout << std::endl
+				   << "Can't operate with " << MISSING_ARGS << endl;
+		  else
+		  {
+			  if (p.numArgs() > 1)
+				  cout << std::endl
+					   << "Ignoring " << UNEXPECTED_ARGS << endl;
+			  if (!Parser::isInteger(p.getArg(1)))
+			  {
+				  cout << "Error: field " << p.getArg(1) << " is not an integer" << endl;
+			  }
+			  else
+			  {
+				  career(stoi(p.getArg(1)), *moviedb);
+			  }
+		  }
+	  }
+	  else if (p.getOperation() == "remove_actor")
+	  {
+		  if (p.numArgs() < 1)
+			  cout << std::endl
+				   << "Can't operate with " << MISSING_ARGS << endl;
+		  else
+		  {
+			  if (p.numArgs() > 1)
+				  cout << std::endl
+					   << "Ignoring " << UNEXPECTED_ARGS << endl;
+			  if (!Parser::isInteger(p.getArg(1)))
+			  {
+				  cout << "Error: field " << p.getArg(1) << " is not an integer" << endl;
+			  }
+			  else
+			  {
+				  remove_actor(stoi(p.getArg(1)), *moviedb);
 			  }
 		  }
 	  }

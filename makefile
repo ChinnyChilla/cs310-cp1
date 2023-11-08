@@ -18,13 +18,13 @@ OBJ = obj
 
 all: $(BIN)/$(EXE)
 
-$(BIN)/$(EXE): $(OBJ)/sample_menu.o $(OBJ)/MovieDatabase.o $(OBJ)/Movie.o $(OBJ)/Actor.o 
-	$(CC) $(FLAGS) $(OBJ)/sample_menu.o $(OBJ)/MovieDatabase.o $(OBJ)/Movie.o $(OBJ)/Actor.o -o $@
+$(BIN)/$(EXE): $(OBJ)/sample_menu.o $(OBJ)/MovieDatabase.o $(OBJ)/Movie.o $(OBJ)/Actor.o $(OBJ)/Array.o
+	$(CC) $(FLAGS) $(OBJ)/sample_menu.o $(OBJ)/MovieDatabase.o $(OBJ)/Movie.o $(OBJ)/Actor.o $(OBJ)/Array.o -o $@
 
 $(OBJ)/sample_menu.o: sample_menu.cpp Parser.h
 	$(CC) $(FLAGS) -c sample_menu.cpp -o $@
 
-$(OBJ)/MovieDatabase.o: MovieDatabase.cpp MovieDatabase.h Movie.h Actor.h
+$(OBJ)/MovieDatabase.o: MovieDatabase.cpp MovieDatabase.h Movie.h Actor.h Array.cpp
 	$(CC) $(FLAGS) -c MovieDatabase.cpp -o $@
 
 $(OBJ)/Movie.o: Movie.cpp Movie.h Actor.h
@@ -32,6 +32,9 @@ $(OBJ)/Movie.o: Movie.cpp Movie.h Actor.h
 
 $(OBJ)/Actor.o: Actor.cpp Actor.h
 	$(CC) $(FLAGS) -c Actor.cpp -o $@
+	
+$(OBJ)/Array.o: Array.cpp Array.h
+	$(CC) $(FLAGS) -c Array.cpp -o $@
 tar:	clean
 	tar cvvf $(TARFILE) $(REPODIR)
 	gzip $(TARFILE)
