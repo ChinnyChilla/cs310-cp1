@@ -160,6 +160,7 @@ void MovieDatabase::removeActor(unsigned int actorid) {
 		Movie movie = movies.at(movieLocation);
 		movie.removeActorFromCast(actorid);
 	};
+	cout << "remove_actor: " << actor.first << " " << actor.last << " removed from the program and all casts" << endl;
 	actors.remove(actorLocation);
 	return;
 }
